@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Leaflet renders its own panes; make sure the map fills its container. */
+.leaflet-container {
+  background: #0f172a;
+}
+
+/* --- Custom markers -------------------------------------------------------- */
+.pc-marker {
+  background: transparent;
+  border: none;
+}
+
+.pc-ambulance {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px #ef4444, 0 2px 8px rgba(0, 0, 0, 0.45);
+  animation: pc-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pc-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 3px #ef4444, 0 0 0 0 rgba(239, 68, 68, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 3px #ef4444, 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+}
+
+.pc-endpoint {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.pc-start {
+  background: #10b981;
+}
+
+.pc-end {
+  background: #ef4444;
+}
+
+/* --- Traffic signals ------------------------------------------------------- */
+.pc-signal {
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 9999px;
+  background: #0f172a;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.15s ease;
+}
+
+.pc-signal-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 9999px;
+  background: #64748b;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pc-signal[data-state="green"] .pc-signal-dot {
+  background: #22c55e;
+  box-shadow: 0 0 6px 1px rgba(34, 197, 94, 0.9);
+}
+.pc-signal[data-state="yellow"] .pc-signal-dot {
+  background: #eab308;
+  box-shadow: 0 0 6px 1px rgba(234, 179, 8, 0.9);
+}
+.pc-signal[data-state="red"] .pc-signal-dot {
+  background: #ef4444;
+  box-shadow: 0 0 6px 1px rgba(239, 68, 68, 0.85);
+}
+
+/* A preempted signal gets a bright green halo so the "cleared path" is obvious. */
+.pc-signal.preempt {
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35), 0 0 12px 3px rgba(34, 197, 94, 0.6);
+  animation: pc-signal-pulse 1s ease-in-out infinite;
+}
+
+@keyframes pc-signal-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35), 0 0 12px 3px rgba(34, 197, 94, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.15), 0 0 16px 5px rgba(34, 197, 94, 0.4);
+  }
+}
